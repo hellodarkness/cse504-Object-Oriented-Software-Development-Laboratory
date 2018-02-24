@@ -1,3 +1,10 @@
+//
+// Jianing Sun lab1
+//
+
+#ifndef LAB1_CARD_H
+#define LAB1_CARD_H
+
 #pragma once
 #include <vector>
 #include <fstream>
@@ -11,21 +18,31 @@ struct Card
 {
 	enum Suitenum { clubs, diamonds, hearts, spades };
 	enum Rankenum {
-		two, three, four, five, six, seven, eight, 
+		two, three, four, five, six, seven, eight,
 		nine, ten, jack, queen, king, ace
 	};
 
 	Suitenum suit;
 	Rankenum rank;
 
+	bool operator< (const Card & secondcard)
+	{
+		if (rank == secondcard.rank)
+		{
+			return (suit < secondcard.suit);
+		}
+		return (rank < secondcard.rank);
+	}
+
 	Card(Rankenum cardrank, Suitenum cardsuit) {
 		rank = cardrank;
 		suit = cardsuit;
 	}
-
 };
 
-Card::Rankenum getRank(int a);
-Card::Suitenum getSuit(char a);
+int getRank(int a, Card::Rankenum &rank);
+int getSuit(char a, Card::Suitenum &suit);
 int parseFile(vector<Card> &outputcard, char* filename);
+int deckRanking(const vector<Card> &inputdeck);
 
+#endif //LAB1_CARD_H
